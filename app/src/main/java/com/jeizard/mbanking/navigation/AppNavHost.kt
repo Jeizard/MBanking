@@ -17,10 +17,10 @@ fun AppNavHost(
         startDestination = startDestination
     ) {
         composable(NavigationItem.Main.route) {
-            MainScreen()
+            MainScreen(navController)
         }
         composable(NavigationItem.AllTransactions.route) {
-            AllTransactionsScreen()
+            AllTransactionsScreen(navController)
         }
     }
 }

@@ -16,14 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.models.Transaction
 import com.jeizard.mbanking.models.TransactionStatus
+import com.jeizard.mbanking.navigation.NavigationItem
 import com.jeizard.mbanking.ui.screens.common.TransactionItem
 import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 
 @Composable
-fun RecentTransactionsSection() {
+fun RecentTransactionsSection(navController: NavHostController, ) {
     val transactions = listOf(
         Transaction(
             company = "OOO \"Company\"",
@@ -76,7 +79,7 @@ fun RecentTransactionsSection() {
                     color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .clickable{ /* Navigate to All Transactions screen*/ }
+                        .clickable { navController.navigate(NavigationItem.AllTransactions.route) }
                 )
             }
 
@@ -100,6 +103,6 @@ fun RecentTransactionsSection() {
 @Preview(showBackground = true)
 fun RecentTransactionsSectionPreview() {
     MBankingTheme {
-        RecentTransactionsSection()
+        RecentTransactionsSection(rememberNavController())
     }
 }

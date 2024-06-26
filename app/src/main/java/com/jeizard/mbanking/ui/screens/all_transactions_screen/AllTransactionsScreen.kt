@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.R
 import com.jeizard.mbanking.models.Transaction
 import com.jeizard.mbanking.models.TransactionStatus
@@ -30,7 +32,7 @@ import com.jeizard.mbanking.ui.theme.MBankingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllTransactionsScreen() {
+fun AllTransactionsScreen(navController: NavHostController) {
     val transactions = listOf(
         Transaction(
             company = "OOO \"Company\"",
@@ -130,7 +132,7 @@ fun AllTransactionsScreen() {
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { /*Navigate to Main screen (Back)*/ }) {
+                        IconButton(onClick = { navController.navigateUp() }) {
                             Icon(Icons.Rounded.KeyboardArrowLeft, "ArrowLeftIcon")
                         }
                     },
@@ -163,8 +165,8 @@ fun AllTransactionsScreen() {
 
 @Composable
 @Preview(showBackground = true)
-fun AllTransactionsScreenOldPreview() {
+fun AllTransactionsScreenPreview() {
     MBankingTheme {
-        AllTransactionsScreen()
+        AllTransactionsScreen(rememberNavController())
     }
 }
