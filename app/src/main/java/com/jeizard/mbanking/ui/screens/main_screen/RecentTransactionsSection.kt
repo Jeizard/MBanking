@@ -85,7 +85,7 @@ fun RecentTransactionsSection() {
                 colors = CardDefaults.cardColors(containerColor = DarkGrey)
             ) {
                 LazyColumn {
-                    items(transactions) { transaction ->
+                    items(transactions.take(5)) { transaction ->
                         TransactionItem(transaction)
                     }
                 }
