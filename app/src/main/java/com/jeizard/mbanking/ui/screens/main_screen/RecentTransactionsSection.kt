@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jeizard.mbanking.models.Transaction
 import com.jeizard.mbanking.models.TransactionStatus
+import com.jeizard.mbanking.ui.screens.common.TransactionItem
 import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 

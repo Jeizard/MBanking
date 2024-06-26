@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.main_screen
+package com.jeizard.mbanking.ui.screens.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
