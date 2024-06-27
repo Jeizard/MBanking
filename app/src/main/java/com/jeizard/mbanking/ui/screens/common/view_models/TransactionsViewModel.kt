@@ -6,12 +6,12 @@ import com.jeizard.mbanking.models.Transaction
 import com.jeizard.mbanking.models.TransactionStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class TransactionsViewModel : ViewModel() {
     private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
-    val transactions: StateFlow<List<Transaction>> get() = _transactions
-
+    val transactions: StateFlow<List<Transaction>> = _transactions.asStateFlow()
     init {
         loadTransactions()
     }
@@ -104,7 +104,7 @@ class TransactionsViewModel : ViewModel() {
                     status = TransactionStatus.Executed
                 )
             )
-            _transactions.value = sampleTransactions
+            _transactions.emit(sampleTransactions)
         }
     }
 }
