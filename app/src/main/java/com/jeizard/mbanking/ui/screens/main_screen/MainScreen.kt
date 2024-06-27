@@ -12,10 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     MBankingTheme {
         Scaffold(
             floatingActionButton = {
@@ -36,7 +38,7 @@ fun MainScreen() {
                         .padding(paddingValues)
                 ) {
                     AccountSection()
-                    RecentTransactionsSection()
+                    RecentTransactionsSection(navController)
                 }
             }
         )
@@ -47,6 +49,6 @@ fun MainScreen() {
 @Preview(showBackground = true)
 fun MainScreenPreview() {
     MBankingTheme {
-        MainScreen()
+        MainScreen(rememberNavController())
     }
 }
