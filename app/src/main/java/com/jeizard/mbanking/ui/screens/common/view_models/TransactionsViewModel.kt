@@ -7,9 +7,13 @@ import com.jeizard.mbanking.models.TransactionStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TransactionsViewModel : ViewModel() {
+    private val _allTransactions = MutableStateFlow<List<Transaction>>(emptyList())
     private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
     val transactions: StateFlow<List<Transaction>> = _transactions.asStateFlow()
     init {
@@ -104,7 +108,28 @@ class TransactionsViewModel : ViewModel() {
                     status = TransactionStatus.Executed
                 )
             )
+            _allTransactions.emit(sampleTransactions)
             _transactions.emit(sampleTransactions)
+        }
+    }
+
+    fun filterTransactions(startDate: String, endDate: String) {
+        viewModelScope.launch {
+            if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+                val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                val startDateParsed = dateFormat.parse(startDate)?.time
+                val endDateParsed = dateFormat.parse(endDate)?.time
+
+                _transactions.emit(
+                    _allTransactions.value.filter { transaction ->
+                        val transactionDate = dateFormat.parse(transaction.date)?.time
+                        transactionDate != null && startDateParsed != null && endDateParsed != null &&
+                                transactionDate in startDateParsed..endDateParsed
+                    }
+                )
+            } else {
+                _transactions.emit(_allTransactions.value)
+            }
         }
     }
 }
