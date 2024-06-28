@@ -12,17 +12,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.jeizard.mbanking.utils.navigation.NavigationItem
+import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
     MBankingTheme {
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { /* Navigate to Transaction screen*/ },
+                    onClick = {
+                        viewModel.selectTransaction(null)
+                        navController.navigate(NavigationItem.Transaction.route)
+                    },
                     shape = CircleShape
                 ) {
                     Icon(
@@ -38,7 +44,10 @@ fun MainScreen(navController: NavHostController) {
                         .padding(paddingValues)
                 ) {
                     AccountSection()
-                    RecentTransactionsSection(navController)
+                    RecentTransactionsSection(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
                 }
             }
         )

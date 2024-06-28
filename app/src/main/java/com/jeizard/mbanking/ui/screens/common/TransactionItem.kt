@@ -23,8 +23,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jeizard.mbanking.models.Transaction
-import com.jeizard.mbanking.models.TransactionStatus
+import com.jeizard.mbanking.utils.models.Transaction
+import com.jeizard.mbanking.utils.models.TransactionStatus
 import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.ExecutedColor
 import com.jeizard.mbanking.ui.theme.DeclinedColor
@@ -32,7 +32,7 @@ import com.jeizard.mbanking.ui.theme.InProgressColor
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 
 @Composable
-fun TransactionItem(transaction: Transaction) {
+fun TransactionItem(transaction: Transaction, onClick: () -> Unit) {
     val statusColor = when (transaction.status) {
         TransactionStatus.Executed -> ExecutedColor
         TransactionStatus.Declined -> DeclinedColor
@@ -42,7 +42,7 @@ fun TransactionItem(transaction: Transaction) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{ /* Navigate to Transaction screen*/ },
+            .clickable{ onClick() },
         colors = CardDefaults.cardColors(containerColor = DarkGrey),
         shape = RoundedCornerShape(0.dp)
     ) {
@@ -72,7 +72,7 @@ fun TransactionItem(transaction: Transaction) {
                 )
             }
             Text(
-                text = transaction.amount,
+                text = "$" + transaction.amount,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier.align(Alignment.Top)
@@ -106,7 +106,8 @@ fun TransactionItemPreview() {
                 date = "06.06.2024",
                 amount = "$10.09",
                 status = TransactionStatus.Executed
-            )
+            ),
+            {}
         )
     }
 }
