@@ -26,7 +26,7 @@ import com.jeizard.mbanking.utils.DollarVisualTransformation
 @Composable
 fun TransactionScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
     val transaction by viewModel.selectedTransaction.collectAsState()
-    val newTransaction = transaction ?: Transaction(company = "", number = "", date = "", amount = "", status = TransactionStatus.Executed)
+    val newTransaction = transaction ?: Transaction(accountId = viewModel.selectedAccount.value?.id ?: 0, company = "", number = "", date = "", amount = "", status = TransactionStatus.Executed)
 
     var company by remember { mutableStateOf(newTransaction.company) }
     var number by remember { mutableStateOf(newTransaction.number) }
@@ -122,6 +122,7 @@ fun TransactionScreen(navController: NavHostController, viewModel: TransactionsV
                                 }
                                 viewModel.addTransaction(
                                     Transaction(
+                                        accountId = viewModel.selectedAccount.value?.id ?: 0,
                                         company = company,
                                         number = number,
                                         date = date,
