@@ -154,14 +154,14 @@ fun DateTextField(
             Popup(
                 onDismissRequest = { calendarVisible = false },
                 offset = IntOffset(0, y = columnSize.height + 16)
-                ) {
+            ) {
                 AndroidView(
                     { CalendarView(ContextThemeWrapper(it, R.style.CustomCalendarViewStyle)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     update = { views ->
-                        views.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+                        views.setOnDateChangeListener { _, year, month, dayOfMonth ->
                             val selectedDate = Calendar.getInstance()
                             selectedDate.set(year, month, dayOfMonth)
                             onDateSelected(
@@ -170,6 +170,7 @@ fun DateTextField(
                             )
                             calendarVisible = false
                         }
+                        views.maxDate = Calendar.getInstance().timeInMillis
                     }
                 )
             }
