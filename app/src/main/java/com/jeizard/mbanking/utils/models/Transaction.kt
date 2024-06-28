@@ -1,9 +1,10 @@
 package com.jeizard.mbanking.utils.models
 
 data class Transaction(
-    var company: String,
-    var number: String,
-    var date: String,
-    var amount: String,
-    var status: TransactionStatus
+    val company: String,
+    val number: String,
+    val date: String,
+    val amount: String,
+    val status: TransactionStatus,
+    val accountId: Long
 )
