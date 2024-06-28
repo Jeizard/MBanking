@@ -41,7 +41,6 @@ import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jeizard.mbanking.utils.navigation.NavigationItem
-import com.jeizard.mbanking.ui.screens.filter_by_date_screen.FilterByDateSection
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.filter_by_date_screen
+package com.jeizard.mbanking.ui.screens.all_transactions_screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi

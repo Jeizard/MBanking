@@ -101,6 +101,7 @@ fun TransactionItemPreview() {
     MBankingTheme {
         TransactionItem(
             Transaction(
+                accountId = 1,
                 company = "OOO \"Company\"",
                 number = "f4345jfshjek3454",
                 date = "06.06.2024",

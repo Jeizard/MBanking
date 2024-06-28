@@ -1,5 +1,6 @@
 package com.jeizard.mbanking.ui.screens.main_screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import com.jeizard.mbanking.utils.navigation.NavigationItem
 import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
     MBankingTheme {
@@ -43,7 +45,7 @@ fun MainScreen(navController: NavHostController, viewModel: TransactionsViewMode
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    AccountSection()
+                    AccountSection(viewModel = viewModel)
                     RecentTransactionsSection(
                         navController = navController,
                         viewModel = viewModel
