@@ -27,6 +27,105 @@ class TransactionsViewModel : ViewModel() {
     private val _selectedAccount = MutableStateFlow<Account?>(null)
     val selectedAccount: StateFlow<Account?> = _selectedAccount.asStateFlow()
 
+    private val sampleTransactions = mutableListOf(
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3454",
+            date = "06.06.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company2\"",
+            number = "f4345jfshjek3453",
+            date = "03.06.2024",
+            amount = "10.09",
+            status = TransactionStatus.Declined
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3452",
+            date = "02.06.2024",
+            amount = "10.09",
+            status = TransactionStatus.InProgress
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3451",
+            date = "01.06.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 1,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 2,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 2,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 2,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        ),
+        Transaction(
+            accountId = 3,
+            company = "OOO \"Company\"",
+            number = "f4345jfshjek3450",
+            date = "29.05.2024",
+            amount = "10.09",
+            status = TransactionStatus.Executed
+        )
+    )
+
     init {
         loadAccounts()
     }
@@ -60,111 +159,13 @@ class TransactionsViewModel : ViewModel() {
 
     private fun loadTransactions(accountId: Long) {
         viewModelScope.launch {
-            val sampleTransactions = listOf(
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3454",
-                    date = "06.06.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company2\"",
-                    number = "f4345jfshjek3453",
-                    date = "03.06.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Declined
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3452",
-                    date = "02.06.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.InProgress
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3451",
-                    date = "01.06.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 1,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 2,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 2,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 2,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                ),
-                Transaction(
-                    accountId = 3,
-                    company = "OOO \"Company\"",
-                    number = "f4345jfshjek3450",
-                    date = "29.05.2024",
-                    amount = "10.09",
-                    status = TransactionStatus.Executed
-                )
-            )
-
             sampleTransactions
                 .groupBy { it.accountId }
                 .forEach { (accountId, transactions) ->
                     allTransactionsByAccount[accountId] = transactions.toMutableList()
                 }
             _transactions.emit(allTransactionsByAccount[accountId] ?: emptyList())
+            sortTransactionsByDate()
         }
     }
 
@@ -204,6 +205,7 @@ class TransactionsViewModel : ViewModel() {
 
     fun addTransaction(transaction: Transaction) {
         viewModelScope.launch {
+            sampleTransactions.add(transaction)
             val accountTransactions = allTransactionsByAccount[transaction.accountId] ?: mutableListOf()
             accountTransactions.add(transaction)
             sortTransactionsByDate()
