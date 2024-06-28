@@ -1,24 +1,33 @@
 package com.jeizard.mbanking.ui.screens.all_transactions_screen
 
+import android.os.Build
+import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,14 +40,38 @@ import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jeizard.mbanking.ui.screens.filter_by_date_screen.FilterByDateSection
+import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AllTransactionsScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
     val transactions by viewModel.transactions.collectAsState()
+    var filterStartDate: String  = ""
+    var filterEndDate: String  = ""
+
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = SheetState(
+            skipPartiallyExpanded = true,
+            initialValue = SheetValue.Hidden
+        )
+    )
+    val scope = rememberCoroutineScope()
+
+    BackHandler(onBack = {
+        if (scaffoldState.bottomSheetState.isVisible) {
+            scope.launch {
+                scaffoldState.bottomSheetState.hide()
+            }
+        } else {
+            return@BackHandler
+        }
+    })
 
     MBankingTheme {
-        Scaffold(
+        BottomSheetScaffold(
+            scaffoldState = scaffoldState,
             topBar = {
                 TopAppBar(
                     title = {
@@ -54,32 +87,59 @@ fun AllTransactionsScreen(navController: NavHostController, viewModel: Transacti
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*Navigate to Filter By Date screen*/ }) {
+                        IconButton(onClick = {
+                            scope.launch {
+                                if (scaffoldState.bottomSheetState.isVisible) {
+                                    scaffoldState.bottomSheetState.hide()
+                                } else {
+                                    scaffoldState.bottomSheetState.expand()
+                                }
+                            }
+                        }) {
                             Icon(painter = painterResource(R.drawable.ic_filter), "FilterIcon")
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
                 )
             },
+            sheetContent = {
+                FilterByDateSection(
+                    initialStartDate = filterStartDate,
+                    initialEndDate = filterEndDate,
+                    onSubmit = { startDate, endDate ->
+                        filterStartDate = startDate
+                        filterEndDate = endDate
+                        viewModel.filterTransactions(filterStartDate, filterEndDate)
+                        scope.launch {
+                            scaffoldState.bottomSheetState.hide()
+                        }
+                    }
+                )
+            },
+            sheetContainerColor = MaterialTheme.colorScheme.background,
             content = { paddingValues ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(paddingValues)
-                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkGrey)
-                ) {
-                    LazyColumn {
-                        items(transactions) { transaction ->
-                            TransactionItem(transaction)
+                Box(modifier = Modifier.fillMaxSize()){
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(paddingValues)
+                            .padding(start = 16.dp, end = 16.dp),
+                        colors = CardDefaults.cardColors(containerColor = DarkGrey)
+                    ) {
+                        LazyColumn {
+                            items(transactions) { transaction ->
+                                TransactionItem(transaction)
+                            }
                         }
                     }
                 }
-            }
+            },
+            containerColor = MaterialTheme.colorScheme.background
         )
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview(showBackground = true)
 fun AllTransactionsScreenPreview() {
