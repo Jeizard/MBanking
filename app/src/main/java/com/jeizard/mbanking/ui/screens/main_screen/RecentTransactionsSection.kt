@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.jeizard.mbanking.navigation.NavigationItem
+import com.jeizard.mbanking.utils.navigation.NavigationItem
 import com.jeizard.mbanking.ui.screens.common.TransactionItem
 import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.ui.theme.DarkGrey
@@ -30,6 +30,7 @@ import com.jeizard.mbanking.ui.theme.MBankingTheme
 @Composable
 fun RecentTransactionsSection(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
     val transactions by viewModel.transactions.collectAsState()
+    viewModel.filterTransactions("", "")
 
     MBankingTheme {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -56,7 +57,10 @@ fun RecentTransactionsSection(navController: NavHostController, viewModel: Trans
             ) {
                 LazyColumn {
                     items(transactions.take(5)) { transaction ->
-                        TransactionItem(transaction)
+                        TransactionItem(transaction, onClick = {
+                            viewModel.selectTransaction(transaction)
+                            navController.navigate(NavigationItem.Transaction.route)
+                        })
                     }
                 }
             }

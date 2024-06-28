@@ -40,6 +40,7 @@ import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.ui.theme.DarkGrey
 import com.jeizard.mbanking.ui.theme.MBankingTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.jeizard.mbanking.utils.navigation.NavigationItem
 import com.jeizard.mbanking.ui.screens.filter_by_date_screen.FilterByDateSection
 import kotlinx.coroutines.launch
 
@@ -65,7 +66,7 @@ fun AllTransactionsScreen(navController: NavHostController, viewModel: Transacti
                 scaffoldState.bottomSheetState.hide()
             }
         } else {
-            return@BackHandler
+            navController.navigateUp()
         }
     })
 
@@ -128,7 +129,10 @@ fun AllTransactionsScreen(navController: NavHostController, viewModel: Transacti
                     ) {
                         LazyColumn {
                             items(transactions) { transaction ->
-                                TransactionItem(transaction)
+                                TransactionItem(transaction, onClick = {
+                                    viewModel.selectTransaction(transaction)
+                                    navController.navigate(NavigationItem.Transaction.route)
+                                })
                             }
                         }
                     }

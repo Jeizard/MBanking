@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.filter_by_date_screen
+package com.jeizard.mbanking.ui.screens.common
 
 import android.os.Build
 import android.view.ContextThemeWrapper
@@ -154,7 +154,7 @@ fun DateTextField(
             Popup(
                 onDismissRequest = { calendarVisible = false },
                 offset = IntOffset(0, y = columnSize.height + 16)
-            ) {
+                ) {
                 AndroidView(
                     { CalendarView(ContextThemeWrapper(it, R.style.CustomCalendarViewStyle)) },
                     modifier = Modifier
