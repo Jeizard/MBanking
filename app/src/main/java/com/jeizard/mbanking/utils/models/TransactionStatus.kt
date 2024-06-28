@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.models
+package com.jeizard.mbanking.utils.models
 
 enum class TransactionStatus {
     Executed,
