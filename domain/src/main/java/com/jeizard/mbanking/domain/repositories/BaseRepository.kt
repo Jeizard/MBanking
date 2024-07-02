@@ -1,10 +1,10 @@
 package com.jeizard.mbanking.domain.repositories
 
 interface BaseRepository<Entity> {
-    fun insert(item: Entity)
-    fun update(item: Entity)
-    fun delete(item: Entity)
-    fun deleteAll()
+    suspend fun insert(item: Entity)
+    suspend fun update(item: Entity)
+    suspend fun delete(item: Entity)
+    suspend fun deleteAll()
     fun getAll(): List<Entity>
 
     interface OnDataChangedListener<Entity> {

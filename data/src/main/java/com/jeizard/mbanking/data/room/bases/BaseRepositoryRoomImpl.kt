@@ -1,7 +1,7 @@
 package com.jeizard.mbanking.data.room.bases
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.jeizard.mbanking.domain.repositories.BaseRepository
@@ -16,40 +16,54 @@ abstract class BaseRepositoryRoomImpl<DBEntity, DAO : BaseDao<DBEntity>, Entity>
     private val listeners: MutableSet<BaseRepository.OnDataChangedListener<Entity>> = HashSet()
 
     init {
-        GlobalScope.launch(Dispatchers.IO) {
-            allItems = withContext(Dispatchers.IO) { dao.getAll() }
+        CoroutineScope(Dispatchers.IO).launch {
+            initData()
+        }
+    }
+
+    private suspend fun initData() {
+        allItems = withContext(Dispatchers.IO) { dao.getAll() }
+        withContext(Dispatchers.Main) {
             notifyChanges()
         }
     }
 
-    override fun insert(item: Entity) {
-        GlobalScope.launch(Dispatchers.IO) {
+    override suspend fun insert(item: Entity) {
+        withContext(Dispatchers.IO) {
             dao.insert(mapper.mapToDBEntity(item))
-            allItems = withContext(Dispatchers.IO) { dao.getAll() }
+            allItems = dao.getAll()
+        }
+        withContext(Dispatchers.Main) {
             notifyChanges()
         }
     }
 
-    override fun update(item: Entity) {
-        GlobalScope.launch(Dispatchers.IO) {
+    override suspend fun update(item: Entity) {
+        withContext(Dispatchers.IO) {
             dao.update(mapper.mapToDBEntity(item))
-            allItems = withContext(Dispatchers.IO) { dao.getAll() }
+            allItems = dao.getAll()
+        }
+        withContext(Dispatchers.Main) {
             notifyChanges()
         }
     }
 
-    override fun delete(item: Entity) {
-        GlobalScope.launch(Dispatchers.IO) {
+    override suspend fun delete(item: Entity) {
+        withContext(Dispatchers.IO) {
             dao.delete(mapper.mapToDBEntity(item))
-            allItems = withContext(Dispatchers.IO) { dao.getAll() }
+            allItems = dao.getAll()
+        }
+        withContext(Dispatchers.Main) {
             notifyChanges()
         }
     }
 
-    override fun deleteAll() {
-        GlobalScope.launch(Dispatchers.IO) {
+    override suspend fun deleteAll() {
+        withContext(Dispatchers.IO) {
             dao.deleteAll()
-            allItems = withContext(Dispatchers.IO) { dao.getAll() }
+            allItems = dao.getAll()
+        }
+        withContext(Dispatchers.Main) {
             notifyChanges()
         }
     }
