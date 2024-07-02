@@ -50,7 +50,10 @@ android {
 }
 
 dependencies {
-    //Google Fonts
+
+    implementation(project(path = ":domain"))
+    implementation(project(path = ":data"))
+
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
