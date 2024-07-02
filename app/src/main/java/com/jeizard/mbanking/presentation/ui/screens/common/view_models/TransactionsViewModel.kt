@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.common.view_models
+package com.jeizard.mbanking.presentation.ui.screens.common.view_models
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

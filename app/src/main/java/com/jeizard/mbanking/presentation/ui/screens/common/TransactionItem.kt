@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.common
+package com.jeizard.mbanking.presentation.ui.screens.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,11 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jeizard.mbanking.utils.models.Transaction
 import com.jeizard.mbanking.utils.models.TransactionStatus
-import com.jeizard.mbanking.ui.theme.DarkGrey
-import com.jeizard.mbanking.ui.theme.ExecutedColor
-import com.jeizard.mbanking.ui.theme.DeclinedColor
-import com.jeizard.mbanking.ui.theme.InProgressColor
-import com.jeizard.mbanking.ui.theme.MBankingTheme
+import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
+import com.jeizard.mbanking.presentation.ui.theme.ExecutedColor
+import com.jeizard.mbanking.presentation.ui.theme.DeclinedColor
+import com.jeizard.mbanking.presentation.ui.theme.InProgressColor
+import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 
 @Composable
 fun TransactionItem(transaction: Transaction, onClick: () -> Unit) {

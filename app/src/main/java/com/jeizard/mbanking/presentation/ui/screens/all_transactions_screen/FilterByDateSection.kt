@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.all_transactions_screen
+package com.jeizard.mbanking.presentation.ui.screens.all_transactions_screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,7 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jeizard.mbanking.ui.screens.common.DateTextField
+import com.jeizard.mbanking.presentation.ui.screens.common.DateTextField
 import java.text.SimpleDateFormat
 import java.util.Locale
 

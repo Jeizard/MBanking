@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.all_transactions_screen
+package com.jeizard.mbanking.presentation.ui.screens.all_transactions_screen
 
 import android.os.Build
 import androidx.activity.compose.BackHandler
@@ -35,10 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.R
-import com.jeizard.mbanking.ui.screens.common.TransactionItem
-import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
-import com.jeizard.mbanking.ui.theme.DarkGrey
-import com.jeizard.mbanking.ui.theme.MBankingTheme
+import com.jeizard.mbanking.presentation.ui.screens.common.TransactionItem
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
+import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jeizard.mbanking.utils.navigation.NavigationItem
 import kotlinx.coroutines.launch

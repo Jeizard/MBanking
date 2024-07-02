@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.main_screen
+package com.jeizard.mbanking.presentation.ui.screens.main_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.jeizard.mbanking.R
-import com.jeizard.mbanking.ui.theme.DarkGrey
+import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
 import com.jeizard.mbanking.utils.models.Account
 
 @Composable

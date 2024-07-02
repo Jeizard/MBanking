@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.transaction_screen
+package com.jeizard.mbanking.presentation.ui.screens.transaction_screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -16,9 +16,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.utils.models.Transaction
 import com.jeizard.mbanking.utils.models.TransactionStatus
-import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
-import com.jeizard.mbanking.ui.screens.common.DateTextField
-import com.jeizard.mbanking.ui.theme.MBankingTheme
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.screens.common.DateTextField
+import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 import com.jeizard.mbanking.utils.DollarVisualTransformation
 
 @RequiresApi(Build.VERSION_CODES.O)
