@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.main_screen
+package com.jeizard.mbanking.presentation.ui.screens.main_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.utils.navigation.NavigationItem
-import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
-import com.jeizard.mbanking.ui.theme.MBankingTheme
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

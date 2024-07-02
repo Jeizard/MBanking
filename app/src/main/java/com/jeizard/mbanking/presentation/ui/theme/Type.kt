@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.theme
+package com.jeizard.mbanking.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

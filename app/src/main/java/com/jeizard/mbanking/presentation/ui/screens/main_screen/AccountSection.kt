@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.main_screen
+package com.jeizard.mbanking.presentation.ui.screens.main_screen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -21,10 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.jeizard.mbanking.ui.screens.common.view_models.TransactionsViewModel
-import com.jeizard.mbanking.ui.theme.DarkGrey
-import com.jeizard.mbanking.ui.theme.LightBlue
-import com.jeizard.mbanking.ui.theme.MBankingTheme
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
+import com.jeizard.mbanking.presentation.ui.theme.LightBlue
+import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

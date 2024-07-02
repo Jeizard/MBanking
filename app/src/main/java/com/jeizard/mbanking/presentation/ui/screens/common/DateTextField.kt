@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.common
+package com.jeizard.mbanking.presentation.ui.screens.common
 
 import android.os.Build
 import android.view.ContextThemeWrapper

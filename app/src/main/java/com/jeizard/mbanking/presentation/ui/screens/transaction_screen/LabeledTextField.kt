@@ -1,4 +1,4 @@
-package com.jeizard.mbanking.ui.screens.transaction_screen
+package com.jeizard.mbanking.presentation.ui.screens.transaction_screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

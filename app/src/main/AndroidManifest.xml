@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MBanking"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.jeizard.mbanking.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MBanking"
