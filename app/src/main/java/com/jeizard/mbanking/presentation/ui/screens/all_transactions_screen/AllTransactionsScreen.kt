@@ -36,17 +36,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.jeizard.mbanking.R
 import com.jeizard.mbanking.presentation.ui.screens.common.TransactionItem
-import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.AllTransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionViewModel
 import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
 import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jeizard.mbanking.utils.navigation.NavigationItem
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllTransactionsScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
+fun AllTransactionsScreen(navController: NavHostController, viewModel: AllTransactionsViewModel = koinViewModel()) {
     val transactions by viewModel.transactions.collectAsState()
     var filterStartDate: String  = ""
     var filterEndDate: String  = ""
@@ -128,10 +129,7 @@ fun AllTransactionsScreen(navController: NavHostController, viewModel: Transacti
                     ) {
                         LazyColumn {
                             items(transactions) { transaction ->
-                                TransactionItem(transaction, onClick = {
-                                    viewModel.selectTransaction(transaction)
-                                    navController.navigate(NavigationItem.Transaction.route)
-                                })
+                                TransactionItem(transaction, navController)
                             }
                         }
                     }

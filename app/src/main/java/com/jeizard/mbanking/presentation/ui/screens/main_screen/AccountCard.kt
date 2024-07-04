@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.jeizard.mbanking.R
+import com.jeizard.mbanking.domain.entities.Account
 import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
-import com.jeizard.mbanking.utils.models.Account
 
 @Composable
 fun AccountCard(
@@ -58,7 +58,7 @@ fun AccountCard(
                     modifier = Modifier.padding(bottom = 2.dp)
                 )
                 Text(
-                    text = selectedAccount.number,
+                    text = selectedAccount.number.toString(),
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(vertical = 2.dp)

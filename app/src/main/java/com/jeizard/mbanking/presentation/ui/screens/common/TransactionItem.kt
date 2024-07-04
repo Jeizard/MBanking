@@ -23,16 +23,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jeizard.mbanking.utils.models.Transaction
-import com.jeizard.mbanking.utils.models.TransactionStatus
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.jeizard.mbanking.domain.entities.Transaction
+import com.jeizard.mbanking.domain.entities.TransactionStatus
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.AllTransactionsViewModel
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionViewModel
 import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
 import com.jeizard.mbanking.presentation.ui.theme.ExecutedColor
 import com.jeizard.mbanking.presentation.ui.theme.DeclinedColor
 import com.jeizard.mbanking.presentation.ui.theme.InProgressColor
 import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
+import com.jeizard.mbanking.utils.navigation.NavigationItem
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TransactionItem(transaction: Transaction, onClick: () -> Unit) {
+fun TransactionItem(transaction: Transaction, navController: NavHostController, viewModel: TransactionViewModel = koinViewModel()) {
     val statusColor = when (transaction.status) {
         TransactionStatus.Executed -> ExecutedColor
         TransactionStatus.Declined -> DeclinedColor
@@ -42,7 +48,10 @@ fun TransactionItem(transaction: Transaction, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{ onClick() },
+            .clickable {
+                viewModel.selectTransaction(transaction)
+                navController.navigate(NavigationItem.Transaction.route)
+            },
         colors = CardDefaults.cardColors(containerColor = DarkGrey),
         shape = RoundedCornerShape(0.dp)
     ) {
@@ -72,7 +81,7 @@ fun TransactionItem(transaction: Transaction, onClick: () -> Unit) {
                 )
             }
             Text(
-                text = "$" + transaction.amount,
+                text = "$" + transaction.amount.toString(),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier.align(Alignment.Top)
@@ -101,14 +110,13 @@ fun TransactionItemPreview() {
     MBankingTheme {
         TransactionItem(
             Transaction(
-                accountId = 1,
                 company = "OOO \"Company\"",
                 number = "f4345jfshjek3454",
                 date = "06.06.2024",
-                amount = "$10.09",
+                amount = 10.09,
                 status = TransactionStatus.Executed
             ),
-            {}
+            rememberNavController()
         )
     }
 }

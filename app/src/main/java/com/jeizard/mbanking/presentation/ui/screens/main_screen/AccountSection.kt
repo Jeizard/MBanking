@@ -20,19 +20,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.domain.entities.Account
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.MainViewModel
 import com.jeizard.mbanking.presentation.ui.theme.DarkGrey
 import com.jeizard.mbanking.presentation.ui.theme.LightBlue
 import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountSection(viewModel: TransactionsViewModel = viewModel()) {
+fun AccountSection(viewModel: MainViewModel = koinViewModel()) {
     val selectedAccount by viewModel.selectedAccount.collectAsState()
     val accounts by viewModel.accounts.collectAsState()
 
-    val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
     BackHandler(onBack = {
@@ -57,7 +57,8 @@ fun AccountSection(viewModel: TransactionsViewModel = viewModel()) {
             )
             LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
                 items(accounts) { account ->
-                    AccountCard(selectedAccount = account,
+                    AccountCard(
+                        selectedAccount = account,
                         onCardClicked = {
                             viewModel.selectAccount(account)
                             showBottomSheet = false
@@ -80,7 +81,7 @@ fun AccountSection(viewModel: TransactionsViewModel = viewModel()) {
             style = MaterialTheme.typography.titleMedium
         )
         AccountCard(
-            selectedAccount = selectedAccount!!,
+            selectedAccount = selectedAccount ?: Account(0, "Error", "Error"),
             onCardClicked = {
                 showBottomSheet = true
             }

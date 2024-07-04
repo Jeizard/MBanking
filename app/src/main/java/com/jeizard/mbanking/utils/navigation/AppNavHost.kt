@@ -7,7 +7,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jeizard.mbanking.presentation.ui.screens.all_transactions_screen.AllTransactionsScreen
-import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.presentation.ui.screens.main_screen.MainScreen
 import com.jeizard.mbanking.presentation.ui.screens.transaction_screen.TransactionScreen
 
@@ -15,21 +14,20 @@ import com.jeizard.mbanking.presentation.ui.screens.transaction_screen.Transacti
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startDestination: String = NavigationItem.Main.route,
-    transactionViewModel: TransactionsViewModel
+    startDestination: String = NavigationItem.Main.route
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
         composable(NavigationItem.Main.route) {
-            MainScreen(navController = navController, viewModel = transactionViewModel)
+            MainScreen(navController = navController)
         }
         composable(NavigationItem.AllTransactions.route) {
-            AllTransactionsScreen(navController = navController, viewModel = transactionViewModel)
+            AllTransactionsScreen(navController = navController)
         }
         composable(NavigationItem.Transaction.route) {
-            TransactionScreen(navController = navController, viewModel = transactionViewModel)
+            TransactionScreen(navController = navController)
         }
     }
 }
