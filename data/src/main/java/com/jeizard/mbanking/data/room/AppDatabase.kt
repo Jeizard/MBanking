@@ -12,7 +12,8 @@ import com.jeizard.mbanking.data.room.models.single.transactions.entity.Transact
 
 @Database(
     entities = [
-        AccountDBEntity::class
+        AccountDBEntity::class,
+        TransactionDBEntity::class
     ],
     version = 1,
     exportSchema = false
