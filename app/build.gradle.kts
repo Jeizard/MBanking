@@ -54,8 +54,10 @@ dependencies {
     implementation(project(path = ":domain"))
     implementation(project(path = ":data"))
 
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
-
+    implementation(libs.androidx.ui.google.fonts)
+    implementation(libs.io.koin.core)
+    implementation(libs.io.koin.android)
+    implementation(libs.io.koin.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
