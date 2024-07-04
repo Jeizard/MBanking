@@ -8,6 +8,7 @@ import com.jeizard.mbanking.data.room.models.intermediate.account_transactions.d
 import com.jeizard.mbanking.data.room.models.intermediate.account_transactions.entity.AccountTransactionDBEntity
 import com.jeizard.mbanking.data.room.models.single.accounts.dao.AccountDao
 import com.jeizard.mbanking.data.room.models.single.accounts.entity.AccountDBEntity
+import com.jeizard.mbanking.data.room.models.single.transactions.dao.TransactionDao
 import com.jeizard.mbanking.data.room.models.single.transactions.entity.TransactionDBEntity
 
 @Database(
@@ -21,6 +22,8 @@ import com.jeizard.mbanking.data.room.models.single.transactions.entity.Transact
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
+
+    abstract fun transactionDao(): TransactionDao
     abstract fun accountTransactionDao(): AccountTransactionDao
 
     companion object {
