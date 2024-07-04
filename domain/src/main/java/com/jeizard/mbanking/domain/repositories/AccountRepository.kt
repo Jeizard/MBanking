@@ -6,7 +6,7 @@ interface AccountRepository{
     fun getAll(): List<Account>
 
     interface OnAccountsChangedListener {
-        fun onChanged(items: List<Account>)
+        fun onChanged(accounts: List<Account>)
     }
 
     fun addListener(listener: OnAccountsChangedListener)

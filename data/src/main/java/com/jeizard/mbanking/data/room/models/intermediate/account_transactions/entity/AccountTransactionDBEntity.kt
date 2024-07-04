@@ -32,5 +32,5 @@ import com.jeizard.mbanking.data.room.models.single.transactions.entity.Transact
 )
 data class AccountTransactionDBEntity(
     @ColumnInfo(name = "account_number") val accountNumber: Long,
-    @ColumnInfo(name = "transaction_number") val transactionNumber: Long
+    @ColumnInfo(name = "transaction_number") val transactionNumber: String
 )

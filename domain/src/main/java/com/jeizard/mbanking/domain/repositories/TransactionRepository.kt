@@ -9,7 +9,7 @@ interface TransactionRepository{
     fun getAll(): List<Transaction>
 
     interface OnTransactionsChangedListener {
-        fun onChanged(items: List<Transaction>)
+        fun onChanged(transactions: List<Transaction>)
     }
 
     fun addListener(listener: OnTransactionsChangedListener)
