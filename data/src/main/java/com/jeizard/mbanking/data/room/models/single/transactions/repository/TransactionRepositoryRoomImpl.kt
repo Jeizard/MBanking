@@ -8,18 +8,16 @@ import com.jeizard.mbanking.data.room.models.single.transactions.dao.Transaction
 import com.jeizard.mbanking.data.room.models.single.transactions.entity.TransactionDBEntity
 import com.jeizard.mbanking.data.room.models.single.transactions.mapper.TransactionDBEntityMapper
 import com.jeizard.mbanking.domain.entities.Transaction
-import com.jeizard.mbanking.domain.repositories.BaseRepository
 import com.jeizard.mbanking.domain.repositories.TransactionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TransactionRepositoryRoomImpl(application: Application) :
     TransactionRepository {
     private var allTransactionsByAccount: List<TransactionDBEntity> = emptyList()
-    private val listeners: MutableSet<BaseRepository.OnDataChangedListener<Transaction>> = HashSet()
+    private val listeners: MutableSet<TransactionRepository.OnTransactionsChangedListener> = HashSet()
     private val transactionDao: TransactionDao = AppDatabase.getInstance(application).transactionDao()
     private val transactionDBEntityMapper: TransactionDBEntityMapper = TransactionDBEntityMapper()
 
@@ -29,17 +27,11 @@ class TransactionRepositoryRoomImpl(application: Application) :
         set(value) {
             field = value
             CoroutineScope(Dispatchers.IO).launch {
-                initData()
+                updateAllTransactionsByAccountNumber()
             }
         }
 
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            initData()
-        }
-    }
-
-    private suspend fun initData() {
+    private suspend fun updateAllTransactionsByAccountNumber() {
         allTransactionsByAccount = withContext(Dispatchers.IO) { transactionDao.getAllTransactionsByAccountNumber(accountNumber) }
         withContext(Dispatchers.Main) {
             notifyChanges()
@@ -57,48 +49,16 @@ class TransactionRepositoryRoomImpl(application: Application) :
         }
     }
 
-    override suspend fun update(transaction: Transaction) {
-        withContext(Dispatchers.IO) {
-            transactionDao.update(transactionDBEntityMapper.mapToDBEntity(transaction))
-            accountTransactionDao.update(AccountTransactionDBEntity(accountNumber, transaction.number))
-            allTransactionsByAccount = transactionDao.getAllTransactionsByAccountNumber(accountNumber)
-        }
-        withContext(Dispatchers.Main) {
-            notifyChanges()
-        }
-    }
-
-    override suspend fun delete(transaction: Transaction) {
-        withContext(Dispatchers.IO) {
-            transactionDao.delete(transactionDBEntityMapper.mapToDBEntity(transaction))
-            accountTransactionDao.delete(AccountTransactionDBEntity(accountNumber, transaction.number))
-            allTransactionsByAccount = transactionDao.getAllTransactionsByAccountNumber(accountNumber)
-        }
-        withContext(Dispatchers.Main) {
-            notifyChanges()
-        }
-    }
-
-    override suspend fun deleteAll() {
-        withContext(Dispatchers.IO) {
-            transactionDao.deleteAll()
-            allTransactionsByAccount = transactionDao.getAllTransactionsByAccountNumber(accountNumber)
-        }
-        withContext(Dispatchers.Main) {
-            notifyChanges()
-        }
-    }
-
     override fun getAll(): List<Transaction> {
         return transactionDBEntityMapper.mapFromDBEntity(allTransactionsByAccount)
     }
 
-    override fun addListener(listener: BaseRepository.OnDataChangedListener<Transaction>) {
+    override fun addListener(listener: TransactionRepository.OnTransactionsChangedListener) {
         listeners.add(listener)
         listener.onChanged(transactionDBEntityMapper.mapFromDBEntity(allTransactionsByAccount))
     }
 
-    override fun removeListener(listener: BaseRepository.OnDataChangedListener<Transaction>) {
+    override fun removeListener(listener: TransactionRepository.OnTransactionsChangedListener) {
         listeners.remove(listener)
     }
 
