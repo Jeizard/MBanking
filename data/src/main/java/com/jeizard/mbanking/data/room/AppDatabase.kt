@@ -13,13 +13,15 @@ import com.jeizard.mbanking.data.room.models.single.transactions.entity.Transact
 @Database(
     entities = [
         AccountDBEntity::class,
-        TransactionDBEntity::class
+        TransactionDBEntity::class,
+        AccountTransactionDBEntity::class
     ],
     version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun accountDao(): AccountDao
+    abstract fun accountTransactionDao(): AccountTransactionDao
 
     companion object {
         private var instance: AppDatabase? = null
