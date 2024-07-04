@@ -27,21 +27,21 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun accountTransactionDao(): AccountTransactionDao
 
     companion object {
-        private var instance: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase? {
-            if (instance == null) {
-                synchronized(AppDatabase::class) {
-                    instance = Room.databaseBuilder(
+        fun getInstance(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(AppDatabase::class) {
+                    val instance = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
                         "mbanking_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
-                }
+                INSTANCE = instance
+                instance
             }
-            return instance
         }
     }
 }
