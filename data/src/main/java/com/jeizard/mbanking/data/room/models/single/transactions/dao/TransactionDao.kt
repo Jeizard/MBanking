@@ -1,27 +1,15 @@
 package com.jeizard.mbanking.data.room.models.single.transactions.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
-import com.jeizard.mbanking.data.room.bases.BaseDao
+import com.jeizard.mbanking.data.room.models.intermediate.account_transactions.entity.AccountTransactionDBEntity
 import com.jeizard.mbanking.data.room.models.single.transactions.entity.TransactionDBEntity
 
 @Dao
-abstract class TransactionDao : BaseDao<TransactionDBEntity> {
-
-    @Query("DELETE FROM transactions")
-    abstract fun deleteAllTransactions()
-
-    @Query("SELECT * FROM transactions")
-    abstract fun getAllTransactions(): List<TransactionDBEntity>
-
-    override fun deleteAll() {
-        deleteAllTransactions()
-    }
-
-    override fun getAll(): List<TransactionDBEntity> {
-        return getAllTransactions()
-    }
-
+interface TransactionDao {
+    @Insert
+    fun insert(transactionDBEntity: TransactionDBEntity)
     @Query(
         "SELECT * " +
         "FROM transactions " +
@@ -29,5 +17,5 @@ abstract class TransactionDao : BaseDao<TransactionDBEntity> {
         "ON transactions.number = account_transactions.transaction_number " +
         "WHERE account_transactions.account_number = :accountNumber"
     )
-    abstract fun getAllTransactionsByAccountNumber(accountNumber: Long): List<TransactionDBEntity>
+    fun getAllTransactionsByAccountNumber(accountNumber: Long): List<TransactionDBEntity>
 }
