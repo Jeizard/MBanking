@@ -14,31 +14,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.jeizard.mbanking.utils.models.Transaction
-import com.jeizard.mbanking.utils.models.TransactionStatus
-import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
+import com.jeizard.mbanking.domain.entities.Transaction
+import com.jeizard.mbanking.domain.entities.TransactionStatus
 import com.jeizard.mbanking.presentation.ui.screens.common.DateTextField
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionViewModel
 import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
 import com.jeizard.mbanking.utils.DollarVisualTransformation
+import org.koin.androidx.compose.koinViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TransactionScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
+fun TransactionScreen(navController: NavHostController, viewModel: TransactionViewModel = koinViewModel()) {
     val transaction by viewModel.selectedTransaction.collectAsState()
-    val newTransaction = transaction ?: Transaction(accountId = viewModel.selectedAccount.value?.id ?: 0, company = "", number = "", date = "", amount = "", status = TransactionStatus.Executed)
+    val newTransaction = transaction ?: Transaction(company = "", number = "", date = "", amount = 0.0, status = TransactionStatus.Executed)
 
     var company by remember { mutableStateOf(newTransaction.company) }
     var number by remember { mutableStateOf(newTransaction.number) }
     var date by remember { mutableStateOf(newTransaction.date) }
-    var amount by remember { mutableStateOf(newTransaction.amount) }
+    var amount by remember { mutableStateOf(newTransaction.amount.toString()) }
     var status by remember { mutableStateOf(newTransaction.status) }
 
     var isAddTransactionEnabled by remember { mutableStateOf(false) }
     val isExistingTransaction = transaction != null
 
     val onValueChange: () -> Unit = {
-        isAddTransactionEnabled = company.isNotEmpty() && number.isNotEmpty() && date.isNotEmpty() && amount.isNotEmpty()
+        isAddTransactionEnabled = company.isNotEmpty() && number.isNotEmpty() && date.isNotEmpty()
     }
 
     MBankingTheme {
@@ -117,16 +118,15 @@ fun TransactionScreen(navController: NavHostController, viewModel: TransactionsV
                     Button(
                         onClick = {
                             if (!isExistingTransaction) {
-                                if(amount.startsWith('.')){
+                                if(amount.toString().startsWith('.')){
                                     amount = "0$amount"
                                 }
                                 viewModel.addTransaction(
                                     Transaction(
-                                        accountId = viewModel.selectedAccount.value?.id ?: 0,
                                         company = company,
                                         number = number,
                                         date = date,
-                                        amount = amount,
+                                        amount = amount.toDouble(),
                                         status = status
                                     )
                                 )

@@ -13,22 +13,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.MainViewModel
+import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionViewModel
 import com.jeizard.mbanking.utils.navigation.NavigationItem
-import com.jeizard.mbanking.presentation.ui.screens.common.view_models.TransactionsViewModel
 import com.jeizard.mbanking.presentation.ui.theme.MBankingTheme
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun MainScreen(navController: NavHostController, viewModel: TransactionsViewModel = viewModel()) {
+fun MainScreen(navController: NavHostController, transactionViewModel: TransactionViewModel = koinViewModel()) {
     MBankingTheme {
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = {
-                        viewModel.selectTransaction(null)
+                        transactionViewModel.selectTransaction(null)
                         navController.navigate(NavigationItem.Transaction.route)
                     },
                     shape = CircleShape
@@ -45,10 +46,9 @@ fun MainScreen(navController: NavHostController, viewModel: TransactionsViewMode
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    AccountSection(viewModel = viewModel)
+                    AccountSection()
                     RecentTransactionsSection(
-                        navController = navController,
-                        viewModel = viewModel
+                        navController = navController
                     )
                 }
             }
